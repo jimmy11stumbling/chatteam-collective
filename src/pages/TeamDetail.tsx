@@ -47,7 +47,7 @@ const TeamDetail = () => {
       setIsLoading(true);
       // Simulating API call with setTimeout
       setTimeout(() => {
-        const mockTeams = [
+        const mockTeams: TeamCardProps[] = [
           {
             id: "1",
             name: "Customer Support Team",
@@ -113,7 +113,7 @@ const TeamDetail = () => {
     const newStatus = team.status === "active" ? "inactive" : "active";
     setTeam({
       ...team,
-      status: newStatus,
+      status: newStatus as "active" | "inactive" | "draft",
     });
     
     toast({
