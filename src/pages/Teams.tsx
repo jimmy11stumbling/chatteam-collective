@@ -1,5 +1,6 @@
 
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { 
@@ -83,6 +84,7 @@ const mockTeams: TeamCardProps[] = [
 ];
 
 const Teams = () => {
+  const navigate = useNavigate();
   const [teams, setTeams] = useState<TeamCardProps[]>(mockTeams);
   const [filteredTeams, setFilteredTeams] = useState<TeamCardProps[]>(mockTeams);
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
@@ -221,7 +223,10 @@ const Teams = () => {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.3, delay: index * 0.1 }}
                 >
-                  <TeamCard {...team} />
+                  <TeamCard 
+                    {...team}
+                    onClick={() => navigate(`/teams/${team.id}`)}
+                  />
                 </motion.div>
               ))
             ) : (

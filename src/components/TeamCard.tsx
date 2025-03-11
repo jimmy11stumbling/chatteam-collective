@@ -1,4 +1,5 @@
 
+import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
@@ -24,15 +25,30 @@ const TeamCard = ({
   onClick,
   className,
 }: TeamCardProps) => {
+  const navigate = useNavigate();
+  
   const statusColor = {
     active: "bg-green-50 text-green-600 border-green-200",
     inactive: "bg-neutral-50 text-neutral-600 border-neutral-200",
     draft: "bg-amber-50 text-amber-600 border-amber-200",
   };
 
+  const handleClick = () => {
+    if (onClick) {
+      onClick();
+    } else {
+      navigate(`/teams/${id}`);
+    }
+  };
+
+  const handleManage = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    navigate(`/teams/${id}`);
+  };
+
   return (
     <div 
-      onClick={onClick}
+      onClick={handleClick}
       className={cn(
         "bg-white border border-neutral-200 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1 cursor-pointer",
         className
@@ -65,10 +81,7 @@ const TeamCard = ({
             variant="ghost" 
             size="sm" 
             className="text-xs hover:bg-blue-50 hover:text-blue-600"
-            onClick={(e) => {
-              e.stopPropagation();
-              // Handle manage action
-            }}
+            onClick={handleManage}
           >
             Manage
           </Button>
