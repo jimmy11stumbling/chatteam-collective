@@ -1,3 +1,4 @@
+
 import type { Config } from "tailwindcss";
 
 export default {
@@ -61,6 +62,43 @@ export default {
 					'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
+				},
+				// Custom colors for Ultimate Chatbot Station
+				blue: {
+					50: '#F0F7FF',
+					100: '#E0EFFF',
+					200: '#B9DAFF',
+					300: '#8CC3FF',
+					400: '#5DABFF',
+					500: '#0A84FF',
+					600: '#0064D2',
+					700: '#0050A5',
+					800: '#003C7D',
+					900: '#002952',
+				},
+				teal: {
+					50: '#EDFCFB',
+					100: '#D3F7F5',
+					200: '#A8EFEA',
+					300: '#7DE6DF',
+					400: '#4ECDC4',
+					500: '#2EB8AF',
+					600: '#1F8C85',
+					700: '#17706A',
+					800: '#0F4D48',
+					900: '#072624',
+				},
+				neutral: {
+					50: '#F5F5F7',
+					100: '#E1E1E6',
+					200: '#C7C7CC',
+					300: '#AEAEB2',
+					400: '#8E8E93',
+					500: '#636366',
+					600: '#48484A',
+					700: '#3A3A3C',
+					800: '#2C2C2E',
+					900: '#1D1D1F',
 				}
 			},
 			borderRadius: {
@@ -84,11 +122,50 @@ export default {
 					to: {
 						height: '0'
 					}
+				},
+				'fade-in': {
+					'0%': { opacity: '0' },
+					'100%': { opacity: '1' }
+				},
+				'fade-up': {
+					'0%': { opacity: '0', transform: 'translateY(10px)' },
+					'100%': { opacity: '1', transform: 'translateY(0)' }
+				},
+				'slide-up': {
+					'0%': { transform: 'translateY(100%)' },
+					'100%': { transform: 'translateY(0)' }
+				},
+				'slide-down': {
+					'0%': { transform: 'translateY(-100%)' },
+					'100%': { transform: 'translateY(0)' }
+				},
+				'zoom-in': {
+					'0%': { transform: 'scale(0.95)', opacity: '0' },
+					'100%': { transform: 'scale(1)', opacity: '1' }
+				},
+				'float': {
+					'0%, 100%': { transform: 'translateY(0)' },
+					'50%': { transform: 'translateY(-10px)' }
+				},
+				'pulse-light': {
+					'0%, 100%': { opacity: '1' },
+					'50%': { opacity: '0.7' }
 				}
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
-				'accordion-up': 'accordion-up 0.2s ease-out'
+				'accordion-up': 'accordion-up 0.2s ease-out',
+				'fade-in': 'fade-in 0.5s ease-out',
+				'fade-up': 'fade-up 0.5s ease-out',
+				'slide-up': 'slide-up 0.3s ease-out',
+				'slide-down': 'slide-down 0.3s ease-out',
+				'zoom-in': 'zoom-in 0.3s ease-out',
+				'float': 'float 6s ease-in-out infinite',
+				'pulse-light': 'pulse-light 2s ease-in-out infinite'
+			},
+			backdropFilter: {
+				'none': 'none',
+				'blur': 'blur(20px)'
 			}
 		}
 	},
