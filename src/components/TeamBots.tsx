@@ -7,6 +7,8 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Badge } from "@/components/ui/badge";
 import { Switch } from "@/components/ui/switch";
 import { TeamCardProps } from "@/components/TeamCard";
+import AddBotModal from "@/components/AddBotModal";
+import ConfigureBotModal from "@/components/ConfigureBotModal";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -93,6 +95,9 @@ const TeamBots = ({ team }: TeamBotsProps) => {
   ]);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [botToDelete, setBotToDelete] = useState<string | null>(null);
+  const [addBotModalOpen, setAddBotModalOpen] = useState(false);
+  const [configureBotModalOpen, setConfigureBotModalOpen] = useState(false);
+  const [selectedBot, setSelectedBot] = useState<Bot | null>(null);
 
   const handleToggleBot = (botId: string) => {
     setBots(prevBots =>
@@ -128,6 +133,44 @@ const TeamBots = ({ team }: TeamBotsProps) => {
       description: `${botName} has been removed from this team.`,
     });
   };
+  
+  const handleAddBot = (botData: { name: string; type: string; description: string }) => {
+    const newBot: Bot = {
+      id: Date.now().toString(),
+      name: botData.name,
+      type: botData.type,
+      description: botData.description,
+      isActive: true
+    };
+    
+    setBots(prevBots => [...prevBots, newBot]);
+    
+    toast({
+      title: "Bot added",
+      description: `${newBot.name} has been added to the team.`,
+    });
+  };
+  
+  const handleConfigureBot = (botId: string) => {
+    const bot = bots.find(b => b.id === botId);
+    if (bot) {
+      setSelectedBot(bot);
+      setConfigureBotModalOpen(true);
+    }
+  };
+  
+  const handleSaveConfiguration = (updatedBot: Bot) => {
+    setBots(prevBots =>
+      prevBots.map(bot => 
+        bot.id === updatedBot.id ? updatedBot : bot
+      )
+    );
+    
+    toast({
+      title: "Bot updated",
+      description: `${updatedBot.name} has been updated.`,
+    });
+  };
 
   const activeBotCount = bots.filter(bot => bot.isActive).length;
 
@@ -140,7 +183,10 @@ const TeamBots = ({ team }: TeamBotsProps) => {
             {activeBotCount} of {bots.length} bots are active
           </p>
         </div>
-        <Button className="bg-blue-500 hover:bg-blue-600">
+        <Button 
+          className="bg-blue-500 hover:bg-blue-600"
+          onClick={() => setAddBotModalOpen(true)}
+        >
           <PlusIcon className="h-4 w-4 mr-2" />
           Add Bot
         </Button>
@@ -176,7 +222,11 @@ const TeamBots = ({ team }: TeamBotsProps) => {
               <p className="text-neutral-600 text-sm">{bot.description}</p>
             </CardContent>
             <CardFooter className="justify-between">
-              <Button variant="outline" size="sm">
+              <Button 
+                variant="outline" 
+                size="sm"
+                onClick={() => handleConfigureBot(bot.id)}
+              >
                 <Activity className="h-4 w-4 mr-2" />
                 Configure
               </Button>
@@ -195,6 +245,7 @@ const TeamBots = ({ team }: TeamBotsProps) => {
         ))}
       </div>
       
+      {/* Delete Confirmation Dialog */}
       <AlertDialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
         <AlertDialogContent>
           <AlertDialogHeader>
@@ -215,6 +266,21 @@ const TeamBots = ({ team }: TeamBotsProps) => {
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
+      
+      {/* Add Bot Modal */}
+      <AddBotModal
+        isOpen={addBotModalOpen}
+        onClose={() => setAddBotModalOpen(false)}
+        onAddBot={handleAddBot}
+      />
+      
+      {/* Configure Bot Modal */}
+      <ConfigureBotModal
+        isOpen={configureBotModalOpen}
+        onClose={() => setConfigureBotModalOpen(false)}
+        bot={selectedBot}
+        onSave={handleSaveConfiguration}
+      />
     </div>
   );
 };

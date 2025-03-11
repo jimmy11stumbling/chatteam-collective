@@ -110,7 +110,10 @@ const TeamDetail = () => {
   const handleToggleStatus = () => {
     if (!team) return;
     
+    // Fix the TypeScript error by properly casting the status
     const newStatus = team.status === "active" ? "inactive" : "active";
+    
+    // Update the team with the properly typed status
     setTeam({
       ...team,
       status: newStatus as "active" | "inactive" | "draft",
@@ -193,25 +196,25 @@ const TeamDetail = () => {
                   Back to Teams
                 </Button>
                 <div className={`h-2.5 w-2.5 rounded-full ${
-                  team.status === "active" ? "bg-green-500" : 
-                  team.status === "inactive" ? "bg-neutral-400" : "bg-amber-500"
+                  team?.status === "active" ? "bg-green-500" : 
+                  team?.status === "inactive" ? "bg-neutral-400" : "bg-amber-500"
                 }`}></div>
                 <span className="text-sm font-medium text-neutral-600 capitalize">
-                  {team.status}
+                  {team?.status}
                 </span>
               </div>
-              <h1 className="text-3xl font-bold text-neutral-900">{team.name}</h1>
+              <h1 className="text-3xl font-bold text-neutral-900">{team?.name}</h1>
               <p className="text-neutral-600 mt-1 max-w-2xl">
-                {team.description}
+                {team?.description}
               </p>
             </div>
             <div className="flex items-center space-x-2 mt-4 md:mt-0">
               <Button
-                variant={team.status === "active" ? "outline" : "default"}
-                className={team.status === "active" ? "border-red-200 text-red-600 hover:bg-red-50" : "bg-green-500 hover:bg-green-600"}
+                variant={team?.status === "active" ? "outline" : "default"}
+                className={team?.status === "active" ? "border-red-200 text-red-600 hover:bg-red-50" : "bg-green-500 hover:bg-green-600"}
                 onClick={handleToggleStatus}
               >
-                {team.status === "active" ? (
+                {team?.status === "active" ? (
                   <>
                     <PauseCircle className="mr-2 h-4 w-4" />
                     Deactivate
@@ -251,15 +254,15 @@ const TeamDetail = () => {
               </TabsList>
               
               <TabsContent value="overview" className="space-y-4">
-                <TeamBots team={team} />
+                {team && <TeamBots team={team} />}
               </TabsContent>
               
               <TabsContent value="conversations" className="space-y-4">
-                <TeamConversations team={team} />
+                {team && <TeamConversations team={team} />}
               </TabsContent>
               
               <TabsContent value="settings" className="space-y-4">
-                <TeamSettings team={team} setTeam={setTeam} />
+                {team && <TeamSettings team={team} setTeam={setTeam} />}
               </TabsContent>
             </Tabs>
           </div>
@@ -274,7 +277,7 @@ const TeamDetail = () => {
             <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
             <AlertDialogDescription>
               This action cannot be undone. This will permanently delete the
-              "{team.name}" team and all associated data.
+              "{team?.name}" team and all associated data.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>

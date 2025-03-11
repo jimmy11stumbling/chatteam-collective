@@ -16,8 +16,8 @@ const TeamsHeader = ({ openCreateModal }: TeamsHeaderProps) => {
         </p>
       </div>
       <Button 
-        className="mt-4 md:mt-0 bg-blue-500 hover:bg-blue-600 text-white flex items-center gap-2 px-4"
         onClick={openCreateModal}
+        className="mt-4 md:mt-0 bg-blue-500 hover:bg-blue-600 text-white flex items-center gap-2 px-4"
       >
         <PlusIcon className="w-4 h-4" />
         <span>Create Team</span>
